@@ -8,7 +8,7 @@ from .serializers import PontoTuristicoSerializer
 #     `partial_update()`, `destroy()` e `list()`
 
 
-class PontosTuristicosViewSet(ModelViewSet):
+class PontoTuristicoViewSet(ModelViewSet):
     """
     EndPoint para a listagem de todos os pontos turisticos com o CRUD completo
     herdade de ModelViewSet
