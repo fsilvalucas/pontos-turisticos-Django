@@ -1,3 +1,7 @@
+Curso - https://www.udemy.com/course/apis-restful-com-django-rest-framework/
+
+
+* CRIE UM ARQUIVO SECRET-KEY COM UMA SECRET KEY
 
 
 ![Alt text](Screenshot from 2020-08-21 15-15-27.png?raw=true "Title")
