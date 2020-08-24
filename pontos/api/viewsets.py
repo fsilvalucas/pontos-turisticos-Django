@@ -15,7 +15,23 @@ class PontoTuristicoViewSet(ModelViewSet):
     serializer_class = PontoTuristicoSerializer
 
     def get_queryset(self):
-        return PontoTuristico.objects.filter(aprovado=True)
+        id = self.request.query_params.get('id', None)
+        nome = self.request.query_params.get('nome', None)
+        descricao = self.request.query_params.get('descricao', None)
+        print(id, nome, descricao)
+        # Isso eh feito em lazy load, ou seja, a execucao real so acontece em return
+        # refatoramos nosso queryset para que seja mais flexivel em relacao as queries
+        queryset = PontoTuristico.objects.all()
+
+        if id:
+            queryset = queryset.filter(id=id)
+        if nome:
+            queryset = queryset.filter(nome=nome)
+        if descricao:
+            queryset = queryset.filter(descricao=descricao)
+
+        # A real execucao do queryset acontece aqui
+        return queryset
 
     # estamos sobreescrevendo o meteodo, porem chamamos o metodo original da classe mae
     # o comportamento continua o mesmo de antes. Mas estamos vendo a referencia
