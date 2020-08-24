@@ -27,8 +27,13 @@ from localizacao.api.viewsets import EnderecoViewSets
 from comentarios.api.viewsets import ComentarioViewSets
 
 
+# Gambiarra do django para podermos hoostear imagems em desenvolvimento.
+# Uma vez que o server esteja em producao, podemos trocar para o amazonS3
+from django.conf import settings
+from django.conf.urls.static import static
+
 router = routers.DefaultRouter()
-router.register(r'pontosturisticos', PontoTuristicoViewSet)
+router.register(r'pontosturisticos', PontoTuristicoViewSet, basename='PontoTuristico')
 router.register(r'atracoes', AtracaoViewSets)
 router.register(r'enderecos', EnderecoViewSets)
 router.register(r'comentarios', ComentarioViewSets)
@@ -36,5 +41,7 @@ router.register(r'comentarios', ComentarioViewSets)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls))
-
 ]
+
+# Gambiarra feita aqui, depois configuramos para amazon s3
+urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
