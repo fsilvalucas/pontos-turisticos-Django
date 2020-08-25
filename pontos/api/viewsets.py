@@ -1,4 +1,6 @@
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 # App
 from pontos.models import PontoTuristico
@@ -24,6 +26,10 @@ class PontoTuristicoViewSet(ModelViewSet):
     search_fields = ('nome', 'descricao', '^endereco__linha1')
     # Pode ser usado ao inves do id, melhor manter o id, pois sabemos que ele eh primary key
     # lookup_field = 'nome'
+
+    # Auth
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
 
     def get_queryset(self):
         id = self.request.query_params.get('id', None)

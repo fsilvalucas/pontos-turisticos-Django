@@ -19,6 +19,7 @@ from django.urls import path, include
 
 # Django Rest
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
 
 # Apps
 from pontos.api.viewsets import PontoTuristicoViewSet
@@ -40,7 +41,8 @@ router.register(r'comentarios', ComentarioViewSets)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path(r'api-token-auth/', obtain_auth_token),
 ]
 
 # Gambiarra feita aqui, depois configuramos para amazon s3
