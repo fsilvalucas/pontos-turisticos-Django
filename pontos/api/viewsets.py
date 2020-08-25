@@ -1,3 +1,4 @@
+from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ModelViewSet
 # App
 from pontos.models import PontoTuristico
@@ -11,14 +12,23 @@ class PontoTuristicoViewSet(ModelViewSet):
     """
     EndPoint para a listagem de todos os pontos turisticos com o CRUD completo
     herdade de ModelViewSet
+    search fields:
+    # ^ : istartwith, Comeca com
+    # = : iexact, Busca exata
+    # @ : search, Mysql
+    # $ : iregex, regex
     """
+    #
     serializer_class = PontoTuristicoSerializer
+    filter_backends = (SearchFilter,)
+    search_fields = ('nome', 'descricao', '^endereco__linha1')
+    # Pode ser usado ao inves do id, melhor manter o id, pois sabemos que ele eh primary key
+    # lookup_field = 'nome'
 
     def get_queryset(self):
         id = self.request.query_params.get('id', None)
         nome = self.request.query_params.get('nome', None)
         descricao = self.request.query_params.get('descricao', None)
-        print(id, nome, descricao)
         # Isso eh feito em lazy load, ou seja, a execucao real so acontece em return
         # refatoramos nosso queryset para que seja mais flexivel em relacao as queries
         queryset = PontoTuristico.objects.all()
